@@ -4,8 +4,11 @@ AI 코딩 에이전트(Claude Code, Codex)와 일할 때 쓰는 규칙·문서 �
 ## 구조
 
 ```text
-global/
-└── AGENTS.md               # 전역 규칙: 모든 프로젝트 공통 행동 원칙
+.claude/                    # ~/.claude/에 그대로 복사
+├── AGENTS.md               # 전역 규칙: 모든 프로젝트 공통 행동 원칙
+└── CLAUDE.md               # @AGENTS.md (Claude Code가 전역 규칙을 읽는 입구)
+.codex/                     # ~/.codex/에 그대로 복사
+└── AGENTS.md               # .claude/AGENTS.md와 같은 내용
 project/                    # 새 레포 루트에 그대로 복사
 ├── AGENTS.md               # 레포별 규칙: 개요, 스택, 검증 명령, 문서 위치
 └── docs/memory.md          # 현재 상태와 인수인계
@@ -32,31 +35,14 @@ memory: 세션이나 담당자가 바뀔 때
 
 ### 전역 규칙
 
-실제 파일은 `~/.claude/AGENTS.md` 하나만 둔다. Claude Code는 `~/.claude/CLAUDE.md`의 import로 읽고, Codex는 하드 링크로 같은 파일을 읽는다.
+레포의 `.claude/`, `.codex/`를 홈 폴더의 같은 경로에 복사한다. Claude Code는 `~/.claude/CLAUDE.md`의 `@AGENTS.md`로 전역 규칙을 읽고(전역으로 읽는 파일이 `CLAUDE.md`뿐이라 필요하다), Codex는 `~/.codex/AGENTS.md`를 바로 읽는다.
 
 ```bash
-cp global/AGENTS.md ~/.claude/AGENTS.md
+cp .claude/AGENTS.md .claude/CLAUDE.md ~/.claude/
+cp .codex/AGENTS.md ~/.codex/
 ```
 
-`~/.claude/CLAUDE.md`에는 아래 한 줄만 둔다. Claude Code가 전역으로 읽는 파일은 `CLAUDE.md`뿐이라 이 줄이 필요하다.
-
-```text
-@AGENTS.md
-```
-
-`~/.codex/AGENTS.md`를 하드 링크로 만든다.
-
-```powershell
-# Windows (PowerShell)
-New-Item -ItemType HardLink -Path "$HOME\.codex\AGENTS.md" -Target "$HOME\.claude\AGENTS.md"
-```
-
-```bash
-# macOS / Linux
-ln ~/.claude/AGENTS.md ~/.codex/AGENTS.md
-```
-
-`global/AGENTS.md`를 고친 뒤에는 `cp`로 `~/.claude/AGENTS.md`에 덮어쓴다. 파일을 지우고 새로 만들거나 탐색기에서 "파일 바꾸기"로 덮어쓰면 하드 링크가 끊긴다.
+규칙을 고칠 때는 레포의 `.claude/AGENTS.md`를 고치고 `.codex/AGENTS.md`에도 같은 내용을 복사한 뒤, 위 명령으로 다시 설치한다.
 
 ### 새 프로젝트
 
