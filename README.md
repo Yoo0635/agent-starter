@@ -16,7 +16,7 @@ docs/                       # 템플릿을 정해진 경로에 미리 복사해 
 ├── product/{problem,research,prd}.md
 ├── spec/000-example/{spec,plan,tasks,worklog}.md
 ├── design/{architecture,db,api,infra}.md
-├── adr/ADR-001-example.md
+├── adr/ADR-000-example.md
 └── memory.md
 templates/                  # 원본 템플릿: 새 레포의 docs/templates/로 복사
 ├── product/problem-TEMPLATE.md     # 제품: 검증할 고객 문제
