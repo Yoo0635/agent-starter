@@ -11,25 +11,33 @@ AI 코딩 에이전트(Claude Code, Codex)와 일할 때 쓰는 규칙·문서 �
 └── AGENTS.md               # .claude/AGENTS.md와 같은 내용
 project/                    # 새 레포 루트에 그대로 복사
 ├── AGENTS.md               # 레포별 규칙: 개요, 스택, 검증 명령, 문서 위치
+├── CONTRIBUTING.md         # 개발 환경, 브랜치·커밋 규칙, PR 절차
+├── docs/architecture.md    # 전체 구조와 구성 요소
 └── docs/memory.md          # 현재 상태와 인수인계
 templates/                  # 필요할 때 레포의 docs/ 아래로 복사해서 채움
-├── planning/prd.md         # 제품: 왜, 누구를 위해, 무엇을
-├── planning/spec.md        # 기능: 무엇을, 왜
-├── design/plan.md          # 기능: 어떻게
-├── dev/tasks.md            # 기능: 구현 순서와 체크리스트
-└── adr/ADR-TEMPLATE.md     # 되돌리기 어려운 결정 기록
+├── product/problem-TEMPLATE.md     # 제품: 검증할 고객 문제
+├── product/research-TEMPLATE.md    # 제품: 시장, 경쟁사, 사용자 조사
+├── product/prd-TEMPLATE.md         # 제품: 왜, 누구를 위해, 무엇을
+├── spec/spec-TEMPLATE.md           # 기능: 무엇을, 왜
+├── design/architecture-TEMPLATE.md # 전체 구조와 구성 요소
+├── design/db-TEMPLATE.md           # 데이터 모델
+├── design/api-TEMPLATE.md          # API 엔드포인트
+├── dev/plan-TEMPLATE.md            # 기능: 어떻게
+├── dev/tasks-TEMPLATE.md           # 기능: 구현 순서와 체크리스트
+├── dev/memory-TEMPLATE.md          # 현재 상태와 인수인계
+└── adr/adr-TEMPLATE.md             # 되돌리기 어려운 결정 기록
 ```
 
 ## 문서 흐름
 
 ```text
-PRD (제품당 1개)
+문제 정의 → 리서치 → PRD (제품당 1개)
  └─ 기능마다: spec → plan → tasks → 구현
 ADR: 되돌리기 어려운 결정이 생길 때
 memory: 세션이나 담당자가 바뀔 때
 ```
 
-레포 안에서는 `docs/prd.md`, `docs/specs/NNN-<기능>/{spec,plan,tasks}.md`, `docs/adr/`, `docs/memory.md`에 둔다.
+레포 안에서는 `docs/product/{problem,research,prd}.md`, `docs/specs/NNN-<기능>/{spec,plan,tasks}.md`, `docs/adr/`, `docs/memory.md`에 둔다.
 
 ## 설치
 
@@ -57,4 +65,4 @@ cp -r templates <새 레포 경로>/docs/templates
 
 ## 참고
 
-`spec`, `plan`, `tasks` 템플릿은 [github/spec-kit](https://github.com/github/spec-kit)(MIT)의 템플릿 구조를 참고해 한국어로 다시 썼다. 라이선스 전문은 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 있다.
+템플릿은 널리 쓰이는 공개 템플릿을 한국어로 옮겨 썼다. 원본과 라이선스는 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)에 있다.

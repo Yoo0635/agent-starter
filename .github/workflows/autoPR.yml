@@ -1,0 +1,197 @@
+# 워크플로우 이름
+name: PR 자동화
+
+# 실행 조건: develop 브랜치로 PR이 열리거나 머지 완료됐을 때
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [ opened, closed ]
+
+# 실행할 작업
+jobs:
+  automate-pr:
+    if: github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      contents: read
+    env:
+      PROJECT_ACCESS_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+
+    steps:
+      # PR 작성자를 Assignee로 자동 할당
+      - name: PR 작성자를 담당자로 할당
+        uses: li-sumup/actions-assigner@v1.0.2
+
+      # PR 제목에 따라 Label 자동 할당 (예시)
+      # - name: 제목에 'feat'가 있으면 'feature' 라벨 추가
+      #   if: contains(github.event.pull_request.title, 'feat')
+      #   uses: actions-ecosystem/action-add-labels@v1
+      #   with:
+      #     labels: feature
+
+
+      # PR 제목에 따라 Label 자동 할당
+      - name: design 라벨 할당
+        if: contains(github.event.pull_request.title, 'design')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: design
+
+      - name: feat 라벨 할당
+        if: contains(github.event.pull_request.title, 'feat')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: feat
+          
+      - name: fix 라벨 할당
+        if: contains(github.event.pull_request.title, 'fix')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: fix
+          
+      - name: refactor 라벨 할당
+        if: contains(github.event.pull_request.title, 'refactor')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: refactor
+          
+      - name: chore 라벨 할당
+        if: contains(github.event.pull_request.title, 'chore')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: chore
+
+
+      # 백엔드 전용 프로젝트가 설정된 경우에만 자동 추가
+      - name: GitHub 프로젝트에 추가
+        if: ${{ vars.BACKEND_PROJECT_URL != '' && env.PROJECT_ACCESS_TOKEN != '' }}
+        uses: actions/add-to-project@v2
+        with:
+          project-url: ${{ vars.BACKEND_PROJECT_URL }}
+          github-token: ${{ env.PROJECT_ACCESS_TOKEN }}
+
+  move-linked-issues-done:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    env:
+      PROJECT_ACCESS_TOKEN: ${{ secrets.PROJECT_ACCESS_TOKEN }}
+
+    steps:
+      - name: 연결 이슈의 프로젝트 상태를 Done으로 변경
+        if: ${{ env.PROJECT_ACCESS_TOKEN != '' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ env.PROJECT_ACCESS_TOKEN }}
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const closingKeywordPattern = /\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+#(\d+)/gi;
+            const issueNumbers = [...body.matchAll(closingKeywordPattern)]
+              .map((match) => Number(match[1]))
+              .filter((issueNumber, index, issueNumbers) => issueNumbers.indexOf(issueNumber) === index);
+
+            if (issueNumbers.length === 0) {
+              core.info('PR body에서 close/fix/resolve 이슈 번호를 찾지 못했습니다.');
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            for (const issueNumber of issueNumbers) {
+              const issueResult = await github.graphql(`
+                query($owner: String!, $repo: String!, $issueNumber: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    issue(number: $issueNumber) {
+                      projectItems(first: 20) {
+                        nodes {
+                          id
+                          project {
+                            id
+                            title
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              `, { owner, repo, issueNumber });
+
+              const projectItems = issueResult.repository.issue.projectItems.nodes;
+
+              if (projectItems.length === 0) {
+                core.warning(`#${issueNumber} 이슈에 연결된 Project item이 없습니다.`);
+                continue;
+              }
+
+              for (const projectItem of projectItems) {
+                const projectResult = await github.graphql(`
+                  query($projectId: ID!) {
+                    node(id: $projectId) {
+                      ... on ProjectV2 {
+                        id
+                        title
+                        fields(first: 50) {
+                          nodes {
+                            ... on ProjectV2SingleSelectField {
+                              id
+                              name
+                              options {
+                                id
+                                name
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                `, { projectId: projectItem.project.id });
+
+                const project = projectResult.node;
+                const statusField = project.fields.nodes.find((field) => field && field.name === 'Status');
+
+                if (!statusField) {
+                  core.warning(`${project.title} 프로젝트에 Status 필드가 없습니다.`);
+                  continue;
+                }
+
+                const doneOption = statusField.options.find((option) => option.name === 'Done');
+
+                if (!doneOption) {
+                  core.warning(`${project.title} 프로젝트 Status 필드에 Done 옵션이 없습니다.`);
+                  continue;
+                }
+
+                await github.graphql(`
+                  mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                    updateProjectV2ItemFieldValue(input: {
+                      projectId: $projectId,
+                      itemId: $itemId,
+                      fieldId: $fieldId,
+                      value: { singleSelectOptionId: $optionId }
+                    }) {
+                      projectV2Item {
+                        id
+                      }
+                    }
+                  }
+                `, {
+                  projectId: project.id,
+                  itemId: projectItem.id,
+                  fieldId: statusField.id,
+                  optionId: doneOption.id,
+                });
+
+                core.info(`#${issueNumber} 이슈를 ${project.title} 프로젝트의 Done으로 변경했습니다.`);
+              }
+            }
+
+      - name: PROJECT_ACCESS_TOKEN 누락 안내
+        if: ${{ env.PROJECT_ACCESS_TOKEN == '' }}
+        run: echo "PROJECT_ACCESS_TOKEN secret이 없어 프로젝트 상태를 변경하지 않았습니다."
