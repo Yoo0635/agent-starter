@@ -2,7 +2,7 @@
 
 **브랜치**: `<NNN-기능-이름>` | **작성일**: <YYYY-MM-DD> | **명세**: <링크>
 
-**입력**: `docs/specs/<NNN-기능-이름>/spec.md`의 기능 명세
+**입력**: `docs/spec/<NNN-기능-이름>/spec.md`의 기능 명세
 
 **참고**: 이 템플릿은 plan 단계에서 채운다. 작업 흐름은 `AGENTS.md`를 따른다.
 
@@ -46,14 +46,16 @@
 ### 문서 (이 기능)
 
 ```text
-docs/specs/<NNN-기능>/
+docs/spec/<NNN-기능>/
 ├── plan.md              # 이 파일 (plan 단계 산출물)
 ├── research.md          # Phase 0 산출물 (plan 단계)
-├── data-model.md        # Phase 1 산출물 (plan 단계)
 ├── quickstart.md        # Phase 1 산출물 (plan 단계)
-├── contracts/           # Phase 1 산출물 (plan 단계)
 ├── tasks.md             # Phase 2 산출물 (tasks 단계 - plan 단계에서 만들지 않음)
 └── worklog.md           # 작업 기록 (tasks.md와 함께 만들고 작업마다 추가)
+
+docs/design/
+├── db.md                # Phase 1 산출물 (plan 단계에서 이 기능의 엔터티를 추가)
+└── api.md               # Phase 1 산출물 (plan 단계에서 이 기능의 엔드포인트를 추가)
 ```
 
 ### 소스 코드 (레포 루트)

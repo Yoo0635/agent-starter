@@ -5,9 +5,9 @@ description: "기능 구현을 위한 작업 목록 템플릿"
 
 # 작업 목록: <기능 이름>
 
-**입력**: `docs/specs/<NNN-기능-이름>/`의 설계 문서
+**입력**: `docs/spec/<NNN-기능-이름>/`의 설계 문서
 
-**선행 조건**: plan.md (필수), spec.md (사용자 스토리에 필수), research.md, data-model.md, contracts/
+**선행 조건**: plan.md (필수), spec.md (사용자 스토리에 필수), research.md, docs/design/db.md, docs/design/api.md
 
 **테스트**: 아래 예시에는 테스트 작업이 들어 있다. 테스트는 선택 사항이며, 기능 명세에서 명시적으로 요청했을 때만 넣는다.
 
@@ -33,8 +33,8 @@ description: "기능 구현을 위한 작업 목록 템플릿"
   tasks 단계에서는 다음을 바탕으로 이 예시를 실제 작업으로 바꿔야 한다.
   - spec.md의 사용자 스토리 (우선순위 P1, P2, P3 …)
   - plan.md의 기능 요구사항
-  - data-model.md의 엔터티
-  - contracts/의 엔드포인트
+  - docs/design/db.md의 엔터티
+  - docs/design/api.md의 엔드포인트
 
   작업은 사용자 스토리별로 묶어서 스토리마다 다음이 가능해야 한다.
   - 독립적으로 구현

@@ -46,10 +46,10 @@
 2. 변경한 뒤 `AGENTS.md`의 검증 명령을 모두 통과시킨다.
 3. PR 설명에 아래 내용을 적는다.
    - 무엇을, 왜 바꿨는지
-   - 관련 문서나 이슈: <`docs/specs/NNN-<기능>/spec.md`, 이슈 번호 등>
+   - 관련 문서나 이슈: <`docs/spec/NNN-<기능>/spec.md`, 이슈 번호 등>
    - 어떻게 검증했는지: 실행한 명령과 결과
 4. 리뷰어 <N>명 이상의 승인을 받은 뒤 <병합 방식: squash | merge | rebase>로 병합한다.
 
 ## 문서
 
-새 기능이나 되돌리기 어려운 결정은 `AGENTS.md`의 '언제 어떤 문서를 쓰나' 표에 따라 문서를 먼저 쓴다. 구조가 바뀌면 [`docs/architecture.md`](docs/architecture.md)를 함께 고친다.
+새 기능이나 되돌리기 어려운 결정은 `AGENTS.md`의 '언제 어떤 문서를 쓰나' 표에 따라 문서를 먼저 쓴다. 구조가 바뀌면 [`docs/design/architecture.md`](docs/design/architecture.md)를 함께 고친다.
