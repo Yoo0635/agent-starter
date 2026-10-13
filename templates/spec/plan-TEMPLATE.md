@@ -52,7 +52,8 @@ docs/specs/<NNN-기능>/
 ├── data-model.md        # Phase 1 산출물 (plan 단계)
 ├── quickstart.md        # Phase 1 산출물 (plan 단계)
 ├── contracts/           # Phase 1 산출물 (plan 단계)
-└── tasks.md             # Phase 2 산출물 (tasks 단계 - plan 단계에서 만들지 않음)
+├── tasks.md             # Phase 2 산출물 (tasks 단계 - plan 단계에서 만들지 않음)
+└── worklog.md           # 작업 기록 (tasks.md와 함께 만들고 작업마다 추가)
 ```
 
 ### 소스 코드 (레포 루트)

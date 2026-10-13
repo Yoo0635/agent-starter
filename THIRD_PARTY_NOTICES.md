@@ -5,13 +5,13 @@
 | 템플릿 | 원본 | 라이선스 |
 |---|---|---|
 | `spec/spec-TEMPLATE.md` | [github/spec-kit `templates/spec-template.md`](https://github.com/github/spec-kit/blob/main/templates/spec-template.md) | MIT |
-| `dev/plan-TEMPLATE.md` | [github/spec-kit `templates/plan-template.md`](https://github.com/github/spec-kit/blob/main/templates/plan-template.md) | MIT |
-| `dev/tasks-TEMPLATE.md` | [github/spec-kit `templates/tasks-template.md`](https://github.com/github/spec-kit/blob/main/templates/tasks-template.md) | MIT |
+| `spec/plan-TEMPLATE.md` | [github/spec-kit `templates/plan-template.md`](https://github.com/github/spec-kit/blob/main/templates/plan-template.md) | MIT |
+| `spec/tasks-TEMPLATE.md` | [github/spec-kit `templates/tasks-template.md`](https://github.com/github/spec-kit/blob/main/templates/tasks-template.md) | MIT |
 | `design/db-TEMPLATE.md` | [github/spec-kit `templates/commands/plan.md`](https://github.com/github/spec-kit/blob/main/templates/commands/plan.md)의 `data-model.md` 규칙 | MIT |
 | `product/problem-TEMPLATE.md` | [GitLab `.gitlab/issue_templates/Problem Validation.md`](https://gitlab.com/gitlab-org/gitlab/-/blob/master/.gitlab/issue_templates/Problem%20Validation.md) | MIT |
 | `product/research-TEMPLATE.md` | [bmad-code-org/BMAD-METHOD `skills/bmad-deep-recon/`](https://github.com/bmad-code-org/BMAD-METHOD/tree/main/skills/bmad-deep-recon)의 리서치 보고서 틀과 market·competitive·user-voice 조사 항목 (여러 파일을 한 파일의 섹션으로 합침) | MIT |
 | `product/prd-TEMPLATE.md` | [snarktank/ai-dev-tasks `create-prd.md`](https://github.com/snarktank/ai-dev-tasks/blob/main/create-prd.md)의 PRD 구조 | Apache-2.0 |
-| `dev/memory-TEMPLATE.md` | [cline/cline `docs/best-practices/memory-bank.mdx`](https://github.com/cline/cline/blob/main/docs/best-practices/memory-bank.mdx)의 Memory Bank 구조 (여러 파일을 한 파일의 섹션으로 합침) | Apache-2.0 |
+| `memory-TEMPLATE.md` | [cline/cline `docs/best-practices/memory-bank.mdx`](https://github.com/cline/cline/blob/main/docs/best-practices/memory-bank.mdx)의 Memory Bank 구조 (여러 파일을 한 파일의 섹션으로 합침) | Apache-2.0 |
 | `adr/adr-TEMPLATE.md` | [Michael Nygard, "Documenting Architecture Decisions"](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions) | CC0 |
 | `design/api-TEMPLATE.md` | [jamescooke/restapidocs](https://github.com/jamescooke/restapidocs) | Unlicense |
 

@@ -19,25 +19,26 @@ templates/                  # 필요할 때 레포의 docs/ 아래로 복사해�
 ├── product/research-TEMPLATE.md    # 제품: 시장, 경쟁사, 사용자 조사
 ├── product/prd-TEMPLATE.md         # 제품: 왜, 누구를 위해, 무엇을
 ├── spec/spec-TEMPLATE.md           # 기능: 무엇을, 왜
+├── spec/plan-TEMPLATE.md           # 기능: 어떻게
+├── spec/tasks-TEMPLATE.md          # 기능: 구현 순서와 체크리스트
+├── spec/worklog-TEMPLATE.md        # 기능: 작업마다 한 일과 다음 할 일
 ├── design/architecture-TEMPLATE.md # 전체 구조와 구성 요소
 ├── design/db-TEMPLATE.md           # 데이터 모델
 ├── design/api-TEMPLATE.md          # API 엔드포인트
-├── dev/plan-TEMPLATE.md            # 기능: 어떻게
-├── dev/tasks-TEMPLATE.md           # 기능: 구현 순서와 체크리스트
-├── dev/memory-TEMPLATE.md          # 현재 상태와 인수인계
-└── adr/adr-TEMPLATE.md             # 되돌리기 어려운 결정 기록
+├── adr/adr-TEMPLATE.md             # 되돌리기 어려운 결정 기록
+└── memory-TEMPLATE.md              # 현재 상태와 인수인계
 ```
 
 ## 문서 흐름
 
 ```text
 문제 정의 → 리서치 → PRD (제품당 1개)
- └─ 기능마다: spec → plan → tasks → 구현
+ └─ 기능마다: spec → plan → tasks → 구현 (작업마다 worklog에 기록)
 ADR: 되돌리기 어려운 결정이 생길 때
 memory: 세션이나 담당자가 바뀔 때
 ```
 
-레포 안에서는 `docs/product/{problem,research,prd}.md`, `docs/specs/NNN-<기능>/{spec,plan,tasks}.md`, `docs/adr/`, `docs/memory.md`에 둔다.
+레포 안에서는 `docs/product/{problem,research,prd}.md`, `docs/specs/NNN-<기능>/{spec,plan,tasks,worklog}.md`, `docs/adr/`, `docs/memory.md`에 둔다. `NNN`은 001부터 1씩 늘어나는 번호다 (`docs/specs/001-login/`, `docs/adr/ADR-001-<결정>.md`).
 
 ## 설치
 

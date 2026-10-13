@@ -44,19 +44,24 @@
 | 리서치 | `docs/product/research.md` | `docs/templates/product/research-TEMPLATE.md` | PRD 근거가 되는 시장, 경쟁사, 사용자 조사 |
 | PRD | `docs/product/prd.md` | `docs/templates/product/prd-TEMPLATE.md` | 제품 전체의 왜, 누구, 무엇 (레포당 1개) |
 | 기능 명세 | `docs/specs/NNN-<기능>/spec.md` | `docs/templates/spec/spec-TEMPLATE.md` | 기능의 무엇과 왜 |
-| 구현 계획 | `docs/specs/NNN-<기능>/plan.md` | `docs/templates/dev/plan-TEMPLATE.md` | 기능의 어떻게 |
-| 작업 목록 | `docs/specs/NNN-<기능>/tasks.md` | `docs/templates/dev/tasks-TEMPLATE.md` | 구현 순서와 체크리스트 |
+| 구현 계획 | `docs/specs/NNN-<기능>/plan.md` | `docs/templates/spec/plan-TEMPLATE.md` | 기능의 어떻게 |
+| 작업 목록 | `docs/specs/NNN-<기능>/tasks.md` | `docs/templates/spec/tasks-TEMPLATE.md` | 구현 순서와 체크리스트 |
+| 작업 기록 | `docs/specs/NNN-<기능>/worklog.md` | `docs/templates/spec/worklog-TEMPLATE.md` | 작업마다 한 일과 다음 할 일 (에이전트 간 인계) |
 | ADR | `docs/adr/ADR-NNN-<결정>.md` | `docs/templates/adr/adr-TEMPLATE.md` | 되돌리기 어려운 결정 |
-| 메모리 | `docs/memory.md` | `docs/templates/dev/memory-TEMPLATE.md` | 현재 상태와 인수인계 |
+| 메모리 | `docs/memory.md` | `docs/templates/memory-TEMPLATE.md` | 현재 상태와 인수인계 |
 
 문서는 반드시 위 템플릿대로 작성한다. 템플릿을 복사한 뒤 섹션 제목과 순서는 바꾸지 않고 내용만 채우며, 템플릿 안의 안내문(`>`)을 따른다.
+
+`NNN`은 001부터 시작하는 세 자리 번호다. 새 기능 폴더나 ADR을 만들 때는 `docs/specs/`나 `docs/adr/`에서 가장 큰 번호에 1을 더한다(예: `docs/specs/001-login/` 다음은 `docs/specs/002-payment/`, `docs/adr/ADR-001-<결정>.md` 다음은 `ADR-002-<결정>.md`). 지운 번호는 다시 쓰지 않는다.
 
 ### 언제 어떤 문서를 쓰나
 
 | 상황 | 할 일 |
 |---|---|
 | 오타, 설정값, 한두 파일짜리 버그 수정 | 문서 없이 바로 작업 |
-| 새 기능, 여러 파일에 걸친 변경 | `spec.md` → `plan.md` → `tasks.md` 순서로 작성 |
+| 새 기능, 여러 파일에 걸친 변경 | `spec.md` → `plan.md` → `tasks.md` 순서로 작성. `tasks.md`를 만들 때 `worklog.md`도 같은 폴더에 만듦 |
+| `tasks.md`의 작업 하나를 시작 | `tasks.md`와 `worklog.md`의 마지막 항목 읽기 |
+| `tasks.md`의 작업 하나를 끝냄 | `worklog.md` 맨 아래에 항목 추가, `tasks.md` 체크 |
 | 요구사항이 모호함 | `spec.md`에 `[확인 필요]`로 표시. 남아 있으면 `plan.md`로 넘어가지 않음 |
 | 새 제품이나 큰 방향 전환 | `problem.md` → `research.md` → `prd.md` 순서로 작성 |
 | 제품 방향, 대상 사용자, 기능 목록이 바뀜 | `docs/product/prd.md` 갱신 |
